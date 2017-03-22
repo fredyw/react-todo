@@ -29,7 +29,7 @@ class TodoTitle extends Component {
   }
 
   handleKeyUp(event) {
-    if (event.keyCode == 13) {
+    if (event.keyCode === 13) {
       this.setState({edit: false});
     }
   }
@@ -45,11 +45,37 @@ class TodoTitle extends Component {
 class TodoItems extends Component {
   constructor(props) {
     super(props);
+    this.state = {items: [
+      {
+        task: "Learn JavaScript",
+        checked: true
+      },
+      {
+        task: "Learn React",
+        checked: false
+      }
+    ]};
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(index, checked) {
+    this.setState((prevState, props) => {
+      prevState.items[index].checked = checked;
+      return {
+        item: prevState.items
+      };
+    });
   }
 
   render() {
     return (
-      <div></div>
+      <div>
+        {this.state.items.map((item, index) => {
+          return (
+            <TodoItem key={index} item={item} index={index} onChange={this.handleChange} />
+          );
+        })}
+      </div>
     );
   }
 }
@@ -57,11 +83,20 @@ class TodoItems extends Component {
 class TodoItem extends Component {
   constructor(props) {
     super(props);
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(event) {
+    this.props.onChange(this.props.index, event.target.checked);
   }
 
   render() {
     return (
-      <div></div>
+      <div>
+        <input type="checkbox" name="item" value={this.props.id}
+          checked={this.props.item.checked}
+          onChange={this.handleChange} />{this.props.item.task}
+      </div>
     );
   }
 }
