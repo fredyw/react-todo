@@ -3,9 +3,12 @@ import React, { Component } from 'react';
 class Todo extends Component {
   render() {
     return (
-      <div>
-        <TodoTitle />
-        <TodoItems />
+      <div className="container">
+        <h1 className="text-center">TODO Application</h1>
+        <div className="form-group">
+          <TodoTitle />
+          <TodoItems />
+        </div>
       </div>
     );
   }
@@ -36,9 +39,11 @@ class TodoTitle extends Component {
 
   render() {
     if (this.state.edit) {
-      return <input type="text" value={this.state.title} onChange={this.handleChange} onKeyUp={this.handleKeyUp} />
+      return <input type="text" value={this.state.title}
+        onChange={this.handleChange} onKeyUp={this.handleKeyUp}
+        className="form-control" />
     }
-    return <div onClick={this.handleClick}>{this.state.title}</div>
+    return <b onClick={this.handleClick}>{this.state.title}</b>
   }
 }
 
@@ -91,11 +96,17 @@ class TodoItem extends Component {
   }
 
   render() {
+    let label = this.props.item.task;
+    if (this.props.item.checked) {
+      label = <strike>{label}</strike>;
+    }
     return (
-      <div>
-        <input type="checkbox" name="item" value={this.props.id}
-          checked={this.props.item.checked}
-          onChange={this.handleChange} />{this.props.item.task}
+      <div className="checkbox">
+        <label>
+          <input type="checkbox" name="item" value={this.props.id}
+            checked={this.props.item.checked}
+            onChange={this.handleChange} />{label}
+        </label>
       </div>
     );
   }
