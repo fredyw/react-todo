@@ -1,5 +1,16 @@
 import React, { Component } from 'react';
 
+class Todo extends Component {
+  render() {
+    return (
+      <div>
+        <TodoTitle />
+        <TodoItems />
+      </div>
+    );
+  }
+}
+
 class TodoTitle extends Component {
   constructor(props) {
     super(props);
@@ -31,16 +42,34 @@ class TodoTitle extends Component {
   }
 }
 
+class TodoItems extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return (
+      <div></div>
+    );
+  }
+}
+
 class TodoItem extends Component {
   constructor(props) {
     super(props);
+  }
+
+  render() {
+    return (
+      <div></div>
+    );
   }
 }
 
 class TodoApp extends Component {
   render() {
     return (
-      <TodoTitle />
+      <Todo />
     );
   }
 }
