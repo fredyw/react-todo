@@ -125,26 +125,32 @@ class TodoItem extends Component {
   }
 
   render() {
-    let label = this.props.item.task;
+    let task = this.props.item.task;
+    let label =
+      <div>
+        <span onClick={this.handleClick}>{task}</span>
+        <i id="delete-item" className="fa fa-trash" aria-hidden="true"></i>
+      </div>;
+
     if (this.state.edit) {
-      label = <input type="text" value={label}
+      label = <input type="text" value={task}
         onChange={this.handleEdit} onKeyUp={this.handleKeyUp}
         className="form-control" />
     } else {
       if (this.props.item.checked) {
-        label = <strike>{label}</strike>;
+        label =
+          <div>
+            <strike><span onClick={this.handleClick}>{task}</span></strike>
+            <i id="delete-item" className="fa fa-trash" aria-hidden="true"></i>
+          </div>;
       }
     }
     return (
       <div className="checkbox">
-        {/*<label>*/}
-          <input type="checkbox" name="item" value={this.props.id}
-            checked={this.props.item.checked}
-            onChange={this.handleCheck} />
-            
-        {/*</label>*/}
-        <span onClick={this.handleClick}>{label}</span>
-        {/*<i className="fa fa-pencil" aria-hidden="true"></i>*/}
+        <input type="checkbox" name="item" value={this.props.id}
+          checked={this.props.item.checked}
+          onChange={this.handleCheck} />
+        {label}
       </div>
     );
   }
