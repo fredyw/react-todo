@@ -8,6 +8,8 @@ class Todo extends Component {
         <div className="form-group todo">
           <TodoTitle />
           <TodoItems />
+          <input className="btn btn-primary add-todo-item" type="button" value="Add New Item" />
+          <input className="btn btn-danger" type="button" value="Delete TODO" />
         </div>
       </div>
     );
