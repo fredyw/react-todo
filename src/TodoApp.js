@@ -5,7 +5,7 @@ class Todo extends Component {
     return (
       <div className="container">
         <h1 className="text-center">TODO Application</h1>
-        <div className="form-group">
+        <div className="form-group todo">
           <TodoTitle />
           <TodoItems />
         </div>
@@ -43,7 +43,7 @@ class TodoTitle extends Component {
         onChange={this.handleEdit} onKeyUp={this.handleKeyUp}
         className="form-control" />
     }
-    return <b onClick={this.handleClick}>{this.state.title}</b>
+    return <b className="todo-title" onClick={this.handleClick}>{this.state.title}</b>
   }
 }
 
@@ -57,18 +57,23 @@ class TodoItems extends Component {
       },
       {
         task: "Learn React",
+        checked: true
+      },
+      {
+        task: "Building TODO application",
         checked: false
       }
     ]};
     this.handleCheck = this.handleCheck.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   handleCheck(index, checked) {
     this.setState((prevState, props) => {
       prevState.items[index].checked = checked;
       return {
-        item: prevState.items
+        items: prevState.items
       };
     });
   }
@@ -77,7 +82,16 @@ class TodoItems extends Component {
     this.setState((prevState, props) => {
       prevState.items[index].task = task;
       return {
-        item: prevState.items
+        items: prevState.items
+      };
+    });
+  }
+
+  handleDelete(index) {
+    this.setState((prevState, props) => {
+      delete prevState.items[index];
+      return {
+        items: prevState.items
       };
     });
   }
@@ -88,7 +102,7 @@ class TodoItems extends Component {
         {this.state.items.map((item, index) => {
           return (
             <TodoItem key={index} item={item} index={index} onCheck={this.handleCheck}
-              onEdit={this.handleEdit} />
+              onEdit={this.handleEdit} onDelete={this.handleDelete} />
           );
         })}
       </div>
@@ -104,6 +118,7 @@ class TodoItem extends Component {
     this.handleClick = this.handleClick.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
     this.handleKeyUp = this.handleKeyUp.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   handleCheck(event) {
@@ -124,12 +139,18 @@ class TodoItem extends Component {
     }
   }
 
+  handleDelete() {
+    this.props.onDelete(this.props.index);
+  }
+
   render() {
     let task = this.props.item.task;
+    let del = <i className="fa fa-trash delete-todo-item" aria-hidden="true"
+      onClick={this.handleDelete}></i>;
     let label =
       <div>
         <span onClick={this.handleClick}>{task}</span>
-        <i id="delete-item" className="fa fa-trash" aria-hidden="true"></i>
+        {del}
       </div>;
 
     if (this.state.edit) {
@@ -141,7 +162,7 @@ class TodoItem extends Component {
         label =
           <div>
             <strike><span onClick={this.handleClick}>{task}</span></strike>
-            <i id="delete-item" className="fa fa-trash" aria-hidden="true"></i>
+            {del}
           </div>;
       }
     }

@@ -1,3 +1,14 @@
-#delete-item {
+.todo {
+  border-style: solid;
+  border-radius: 20px;
+  padding-left: 30px;
+  padding-top: 8px;
+}
+
+.todo-title {
+  text-decoration: underline;
+}
+
+.delete-todo-item {
   margin-left: 5px;
 }
