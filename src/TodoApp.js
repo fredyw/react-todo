@@ -107,7 +107,7 @@ class TodoItems extends Component {
 
   handleAdd() {
     this.setState((prevState, props) => {
-      prevState.items.push({task: "New item", checked: false});
+      prevState.items.push({task: "", checked: false});
       return {
         items: prevState.items
       }
@@ -134,7 +134,7 @@ class TodoItems extends Component {
 class TodoItem extends Component {
   constructor(props) {
     super(props);
-    this.state = {edit: false};
+    this.state = {edit: this.props.item.task == 0};
     this.handleCheck = this.handleCheck.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
@@ -172,7 +172,7 @@ class TodoItem extends Component {
   render() {
     let task = this.props.item.task;
     let del = <i className="fa fa-trash delete-todo-item" aria-hidden="true"
-      onClick={this.handleDelete}></i>;
+      onClick={this.handleDelete} />;
     let label =
       <div>
         <span onClick={this.handleClick}>{task}</span>
@@ -191,7 +191,7 @@ class TodoItem extends Component {
       if (this.props.item.checked) {
         label =
           <div>
-            <strike><span onClick={this.handleClick}>{task}</span></strike>
+            <span className="strike-through" onClick={this.handleClick}>{task}</span>
             {del}
           </div>;
       }
