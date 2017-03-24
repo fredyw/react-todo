@@ -8,8 +8,6 @@ class Todo extends Component {
         <div className="form-group todo">
           <TodoTitle />
           <TodoItems />
-          <input className="btn btn-primary add-todo-item" type="button" value="Add New Item" />
-          <input className="btn btn-danger" type="button" value="Delete TODO" />
         </div>
       </div>
     );
@@ -43,7 +41,8 @@ class TodoTitle extends Component {
     if (this.state.edit) {
       return <input type="text" value={this.state.title}
         onChange={this.handleEdit} onKeyUp={this.handleKeyUp}
-        className="form-control" />
+        className="form-control"
+        placeholder="Enter the title" />
     }
     return <b className="todo-title" onClick={this.handleClick}>{this.state.title}</b>
   }
@@ -69,6 +68,7 @@ class TodoItems extends Component {
     this.handleCheck = this.handleCheck.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+    this.handleAdd = this.handleAdd.bind(this);
   }
 
   handleCheck(index, checked) {
@@ -98,6 +98,15 @@ class TodoItems extends Component {
     });
   }
 
+  handleAdd() {
+    this.setState((prevState, props) => {
+      prevState.items.push({task: "New item", checked: false});
+      return {
+        items: prevState.items
+      }
+    });
+  }
+
   render() {
     return (
       <div>
@@ -107,6 +116,9 @@ class TodoItems extends Component {
               onEdit={this.handleEdit} onDelete={this.handleDelete} />
           );
         })}
+        <input className="btn btn-primary add-todo-item" type="button" value="Add New Item"
+          onClick={this.handleAdd} />
+        <input className="btn btn-danger" type="button" value="Delete TODO" />
       </div>
     );
   }
@@ -158,7 +170,8 @@ class TodoItem extends Component {
     if (this.state.edit) {
       label = <input type="text" value={task}
         onChange={this.handleEdit} onKeyUp={this.handleKeyUp}
-        className="form-control" />
+        className="form-control"
+        placeholder="Enter the task" />
     } else {
       if (this.props.item.checked) {
         label =
