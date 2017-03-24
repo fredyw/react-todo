@@ -21,6 +21,7 @@ class TodoTitle extends Component {
     this.handleClick = this.handleClick.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
     this.handleKeyUp = this.handleKeyUp.bind(this);
+    this.handleBlur = this.handleBlur.bind(this);
   }
 
   handleClick() {
@@ -37,12 +38,18 @@ class TodoTitle extends Component {
     }
   }
 
+  handleBlur() {
+    this.setState({edit: false});
+  }
+
   render() {
     if (this.state.edit) {
       return <input type="text" value={this.state.title}
         onChange={this.handleEdit} onKeyUp={this.handleKeyUp}
+        onBlur={this.handleBlur}
         className="form-control"
-        placeholder="Enter the title" />
+        placeholder="Enter the title"
+        autoFocus />
     }
     return <b className="todo-title" onClick={this.handleClick}>{this.state.title}</b>
   }
@@ -133,6 +140,7 @@ class TodoItem extends Component {
     this.handleEdit = this.handleEdit.bind(this);
     this.handleKeyUp = this.handleKeyUp.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+    this.handleBlur = this.handleBlur.bind(this);
   }
 
   handleCheck(event) {
@@ -157,6 +165,10 @@ class TodoItem extends Component {
     this.props.onDelete(this.props.index);
   }
 
+  handleBlur() {
+    this.setState({edit: false});
+  }
+
   render() {
     let task = this.props.item.task;
     let del = <i className="fa fa-trash delete-todo-item" aria-hidden="true"
@@ -169,9 +181,12 @@ class TodoItem extends Component {
 
     if (this.state.edit) {
       label = <input type="text" value={task}
-        onChange={this.handleEdit} onKeyUp={this.handleKeyUp}
+        onChange={this.handleEdit}
+        onKeyUp={this.handleKeyUp}
+        onBlur={this.handleBlur}
         className="form-control"
-        placeholder="Enter the task" />
+        placeholder="Enter the task"
+        autoFocus />
     } else {
       if (this.props.item.checked) {
         label =
