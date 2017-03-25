@@ -5,15 +5,25 @@ class Todo extends Component {
     super(props);
     this.state = {todos: []};
     this.handleAdd = this.handleAdd.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   handleAdd() {
     this.setState((prevState, props) => {
-      prevState.todos.push({});
+      prevState.todos.push({items: []});
       return {
         todos: prevState.todos
       };
     })
+  }
+
+  handleDelete(index) {
+    this.setState((prevState, props) => {
+      delete prevState.todos[index];
+      return {
+        todos: prevState.todos
+      }
+    });
   }
 
   render() {
@@ -28,7 +38,7 @@ class Todo extends Component {
             <div key={index} className="form-group todo">
               <TodoTitle />
               <p />
-              <TodoItems />
+              <TodoItems index={index} onDelete={this.handleDelete} />
             </div>
           );
         })}
@@ -56,13 +66,15 @@ class TodoTitle extends Component {
   }
 
   handleKeyUp(event) {
-    if (event.keyCode === 13) {
+    if (this.state.title.length > 0 && event.keyCode === 13) {
       this.setState({edit: false});
     }
   }
 
   handleBlur() {
-    this.setState({edit: false});
+    if (this.state.title.length > 0) {
+      this.setState({edit: false});
+    }
   }
 
   render() {
@@ -86,6 +98,7 @@ class TodoItems extends Component {
     this.handleEdit = this.handleEdit.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
     this.handleAdd = this.handleAdd.bind(this);
+    this.handleDeleteAll = this.handleDeleteAll.bind(this);
   }
 
   handleCheck(index, checked) {
@@ -124,6 +137,10 @@ class TodoItems extends Component {
     });
   }
 
+  handleDeleteAll() {
+    this.props.onDelete(this.props.index);
+  }
+
   render() {
     return (
       <div>
@@ -135,7 +152,8 @@ class TodoItems extends Component {
         })}
         <input className="btn btn-primary add-todo-item" type="button" value="Add New Item"
           onClick={this.handleAdd} />
-        <input className="btn btn-danger" type="button" value="Delete TODO" />
+        <input className="btn btn-danger" type="button" value="Delete TODO"
+          onClick={this.handleDeleteAll} />
       </div>
     );
   }
@@ -166,7 +184,7 @@ class TodoItem extends Component {
   }
 
   handleKeyUp(event) {
-    if (event.keyCode === 13) {
+    if (this.props.item.task.length > 0 &&  event.keyCode === 13) {
       this.setState({edit: false});
     }
   }
@@ -176,7 +194,9 @@ class TodoItem extends Component {
   }
 
   handleBlur() {
-    this.setState({edit: false});
+    if (this.props.item.task.length > 0) {
+      this.setState({edit: false});
+    }
   }
 
   render() {
