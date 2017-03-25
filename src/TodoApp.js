@@ -1,14 +1,37 @@
 import React, { Component } from 'react';
 
 class Todo extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {todos: []};
+    this.handleAdd = this.handleAdd.bind(this);
+  }
+
+  handleAdd() {
+    this.setState((prevState, props) => {
+      prevState.todos.push({});
+      return {
+        todos: prevState.todos
+      };
+    })
+  }
+
   render() {
     return (
       <div className="container">
         <h1 className="text-center">TODO Application</h1>
-        <div className="form-group todo">
-          <TodoTitle />
-          <TodoItems />
-        </div>
+        <input className="btn btn-primary" type="button" value="Add TODO"
+          onClick={this.handleAdd} />
+        <p />
+        {this.state.todos.map((todo, index) => {
+          return (
+            <div key={index} className="form-group todo">
+              <TodoTitle />
+              <p />
+              <TodoItems />
+            </div>
+          );
+        })}
       </div>
     );
   }
@@ -17,7 +40,7 @@ class Todo extends Component {
 class TodoTitle extends Component {
   constructor(props) {
     super(props);
-    this.state = {title: "No Title", edit: false};
+    this.state = {edit: true, title: ""};
     this.handleClick = this.handleClick.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
     this.handleKeyUp = this.handleKeyUp.bind(this);
@@ -58,20 +81,7 @@ class TodoTitle extends Component {
 class TodoItems extends Component {
   constructor(props) {
     super(props);
-    this.state = {items: [
-      {
-        task: "Learn JavaScript",
-        checked: true
-      },
-      {
-        task: "Learn React",
-        checked: true
-      },
-      {
-        task: "Building TODO application",
-        checked: false
-      }
-    ]};
+    this.state = {items: []};
     this.handleCheck = this.handleCheck.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
@@ -134,7 +144,7 @@ class TodoItems extends Component {
 class TodoItem extends Component {
   constructor(props) {
     super(props);
-    this.state = {edit: this.props.item.task == 0};
+    this.state = {edit: this.props.item.task.length === 0};
     this.handleCheck = this.handleCheck.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
