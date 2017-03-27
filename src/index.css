@@ -7,8 +7,12 @@
   padding-bottom: 15px;
 }
 
-.todo-title {
+.underline {
   text-decoration: underline;
+}
+
+.todo-title {
+  margin-top: 8px;
 }
 
 .add-todo-item {

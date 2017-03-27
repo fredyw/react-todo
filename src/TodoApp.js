@@ -78,15 +78,22 @@ class TodoTitle extends Component {
   }
 
   render() {
+    let title = null;
     if (this.state.edit) {
-      return <input type="text" value={this.state.title}
+      title = <input type="text" value={this.state.title}
         onChange={this.handleEdit} onKeyUp={this.handleKeyUp}
         onBlur={this.handleBlur}
         className="form-control"
         placeholder="Enter the title"
         autoFocus />
+    } else {
+      title = <b className="underline" onClick={this.handleClick}>{this.state.title}</b>
     }
-    return <b className="todo-title" onClick={this.handleClick}>{this.state.title}</b>
+    return (
+      <div className="todo-title">
+        {title}
+      </div>
+    );
   }
 }
 
