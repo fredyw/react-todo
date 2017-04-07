@@ -1,0 +1,10 @@
+{
+  "typeAcquisition": {
+    "include": [
+      "react"
+    ]
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}

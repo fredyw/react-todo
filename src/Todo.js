@@ -33,7 +33,7 @@ class Todo extends Component {
       <div className="container">
         <h1 className="text-center">TODO Application</h1>
         <input className="btn btn-success" type="button" value="Add TODO"
-          onClick={this.handleAdd} />
+               onClick={this.handleAdd} />
         <p />
         {this.state.todos.map((todo, index) => {
           return (
